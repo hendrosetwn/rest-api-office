@@ -8,6 +8,6 @@ export class CreateOfficeDto {
   @JoiSchema(Joi.string().required())
   country: string;
 
-  @JoiSchema(Joi.number().required())
-  staff_id?: number;
+  @JoiSchema(Joi.array().required())
+  staff_id?: number[];
 }

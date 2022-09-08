@@ -1,4 +1,5 @@
 import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
+import { Staff } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateOfficeDto } from './dto/create-office.dto';
 import { UpdateOfficeDto } from './dto/update-office.dto';
