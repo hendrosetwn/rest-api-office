@@ -9,7 +9,7 @@ export class CreateStaffDto {
   email: string;
 
   @JoiSchema(Joi.number().required())
-  phone: number;
+  phone: string;
 
   @JoiSchema(Joi.number().required())
   office_id?: number;

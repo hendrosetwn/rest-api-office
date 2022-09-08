@@ -12,5 +12,5 @@ export class UpdateStaffDto {
   email?: string;
 
   @JoiSchema(Joi.number())
-  phone?: number;
+  phone?: string;
 }

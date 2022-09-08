@@ -39,7 +39,7 @@ model Staff {
   id          Int      @id @default(autoincrement())
   name        String
   email       String
-  phone       Int
+  phone       String
   office      Office   @relation(fields: [office_id], references: [id])
   office_id   Int
 }
