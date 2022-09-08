@@ -6,8 +6,10 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+
 }
 
 model User {
@@ -31,5 +33,21 @@ model Post {
   id      Int    @id @default(autoincrement())
   title   String
   content String
+}
+
+model Staff {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  phone       Int
+  office      Office   @relation(fields: [office_id], references: [id])
+  office_id   Int
+}
+
+model Office {
+  id        Int        @id @default(autoincrement())
+  name      String
+  country   String
+  staff     Staff[]
 }
 
