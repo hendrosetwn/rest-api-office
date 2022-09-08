@@ -1,5 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { Office } from '@prisma/client';
+import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateStaffDto } from './dto/create-staff.dto';
 import { UpdateStaffDto } from './dto/update-staff.dto';
@@ -8,13 +7,15 @@ import { UpdateStaffDto } from './dto/update-staff.dto';
 export class StaffService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateStaffDto, office: Office) {
+  async create(data: CreateStaffDto) {
     try {
-      const result = await this.prisma.staff.create({
-        data: { ...data },
-        office: { create: { id: office.id } },
-      });
-      return {};
+      const result = await this.prisma.staff.create({ data });
+      return {
+        succes: true,
+        message: 'Succes create Staff',
+        status: HttpStatus.OK,
+        data: result,
+      };
     } catch (error) {
       const message = this.prisma.exceptions(error);
       throw new BadRequestException(message);
