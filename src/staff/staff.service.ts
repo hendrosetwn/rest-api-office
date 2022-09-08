@@ -9,7 +9,7 @@ export class StaffService {
 
   async create(staff: CreateStaffDto) {
     try {
-      const result = await this.prisma.staff.create({ data: { staff } });
+      // const result = await this.prisma.staff.create({ data: {  } });
       return {
         succes: true,
         message: 'Succes create Staff',
