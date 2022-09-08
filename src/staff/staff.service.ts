@@ -7,14 +7,14 @@ import { UpdateStaffDto } from './dto/update-staff.dto';
 export class StaffService {
   constructor(private prisma: PrismaService) {}
 
-  async create(staff: CreateStaffDto) {
+  async create(data: CreateStaffDto) {
     try {
-      // const result = await this.prisma.staff.create({ data: {  } });
+      const result = await this.prisma.staff.create({ data });
       return {
         succes: true,
         message: 'Succes create Staff',
         status: HttpStatus.OK,
-        // data: result,
+        data: result,
       };
     } catch (error) {
       const message = this.prisma.exceptions(error);
@@ -23,7 +23,15 @@ export class StaffService {
   }
 
   async findAll() {
-    const data = await this.prisma.staff.findMany();
+    const data = await this.prisma.staff.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        office: { select: { id: true, name: true, country: true } },
+      },
+    });
     try {
       return {
         succes: true,
@@ -38,7 +46,10 @@ export class StaffService {
   }
 
   async findOne(id: number) {
-    const data = await this.prisma.staff.findUnique({ where: { id } });
+    const data = await this.prisma.staff.findUnique({
+      where: { id },
+      include: { office: true },
+    });
     try {
       return {
         succes: true,

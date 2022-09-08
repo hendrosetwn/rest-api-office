@@ -12,5 +12,5 @@ export class CreateStaffDto {
   phone: string;
 
   @JoiSchema(Joi.number().required())
-  office_id?: number;
+  office_id: number;
 }

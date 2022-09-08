@@ -11,7 +11,6 @@ export class OfficeService {
   async create(data: CreateOfficeDto) {
     try {
       const result = await this.prisma.office.create({ data });
-
       return {
         succes: true,
         message: 'This action adds a new office',
@@ -26,7 +25,9 @@ export class OfficeService {
 
   async findAll() {
     try {
-      const data = await this.prisma.office.findMany();
+      const data = await this.prisma.office.findMany({
+        include: { staff: true },
+      });
 
       return {
         succes: true,
@@ -42,7 +43,10 @@ export class OfficeService {
 
   async findOne(id: number) {
     try {
-      const data = await this.prisma.office.findUnique({ where: { id } });
+      const data = await this.prisma.office.findUnique({
+        where: { id },
+        include: { staff: true },
+      });
       return {
         succes: true,
         message: `This action returns a #${id} office`,
