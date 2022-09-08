@@ -6,22 +6,48 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+
 }
 
 model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  name  String?
-  posts Post[]
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  password String
+  address Address? @relation(fields: [addressId],references: [id]) 
+  addressId Int @unique
+}
+
+model Address {
+  id Int @id @default(autoincrement())
+  street String
+  city String
+  country String
+  user  User?
 }
 
 model Post {
-  id        Int      @default(autoincrement()) @id
-  title     String
-  content   String?
-  published Boolean? @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+  id      Int    @id @default(autoincrement())
+  title   String
+  content String
 }
+
+model Staff {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  phone       String
+  office      Office   @relation(fields: [office_id], references: [id])
+  office_id   Int
+}
+
+model Office {
+  id        Int        @id @default(autoincrement())
+  name      String
+  country   String
+  staff     Staff[]
+}
+
